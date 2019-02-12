@@ -54,6 +54,18 @@ Table of Contents
 Table of Contents End
 ******************************************************/  
 
+/** Custom TiGL styles **/
+.feature-image, .video-container {
+	max-width: 570px;
+}
+
+.feature-image img {
+	width: 100%;
+}
+
+.video-container video {
+	width: 100%;
+}
 
 
 /* 1 - Google Font 
