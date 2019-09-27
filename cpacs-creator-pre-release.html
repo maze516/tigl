@@ -207,9 +207,9 @@
 <p>The high-level cpacs editing functions are also available in the API. You can now easily create small variations of the same aircraft from a python script:</p>
 <div class="highlight"><pre><span></span><span class="n">wing</span> <span class="o">=</span> <span class="n">wings</span><span class="o">.</span><span class="n">get_wing</span><span class="p">(</span><span class="s2">&quot;Wing&quot;</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">sweep</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-        <span class="n">wing</span><span class="o">.</span><span class="n">set_sweep</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span>
-        <span class="n">save</span><span class="p">(</span><span class="n">tixi_h</span><span class="p">,</span> <span class="n">aircraft</span><span class="p">,</span> <span class="s2">&quot;Output/out-sweep-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.xml&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sweep</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">wing</span><span class="o">.</span><span class="n">set_sweep</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span>
+    <span class="n">save</span><span class="p">(</span><span class="n">tixi_h</span><span class="p">,</span> <span class="n">aircraft</span><span class="p">,</span> <span class="s2">&quot;Output/out-sweep-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.xml&quot;</span><span class="p">)</span>
 </pre></div>
 
 
