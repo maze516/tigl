@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dlr-sc.github.io/tigl/</loc>
-<lastmod>2019-10-11T09:43:17-00:00</lastmod>
+<lastmod>2019-10-31T13:16:44-00:00</lastmod>
 <changefreq>yearly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dlr-sc.github.io/tigl/archives.html</loc>
-<lastmod>2019-10-11T09:43:17-00:00</lastmod>
+<lastmod>2019-10-31T13:16:44-00:00</lastmod>
 <changefreq>yearly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dlr-sc.github.io/tigl/tags.html</loc>
-<lastmod>2019-10-11T09:43:17-00:00</lastmod>
+<lastmod>2019-10-31T13:16:44-00:00</lastmod>
 <changefreq>yearly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dlr-sc.github.io/tigl/categories.html</loc>
-<lastmod>2019-10-11T09:43:17-00:00</lastmod>
+<lastmod>2019-10-31T13:16:44-00:00</lastmod>
 <changefreq>yearly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -63,6 +63,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <loc>https://dlr-sc.github.io/tigl/pages/contact.html</loc>
 <lastmod>2019-02-07T10:20:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dlr-sc.github.io/tigl/tutorial-cpacs-sizing-with-matlab.html</loc>
+<lastmod>2019-10-30T19:30:00+01:00</lastmod>
+<changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
@@ -117,7 +124,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dlr-sc.github.io/tigl/category/news.html</loc>
-<lastmod>2019-09-27T14:57:00+00:09</lastmod>
+<lastmod>2019-10-30T19:30:00+00:09</lastmod>
 <changefreq>yearly</changefreq>
 <priority>0.5</priority>
 </url>
