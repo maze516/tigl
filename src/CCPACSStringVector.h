@@ -23,7 +23,6 @@ namespace tigl
 {
 
 TIGL_EXPORT std::vector<double> stringToDoubleVec(const std::string& s);
-TIGL_EXPORT std::string doubleVecToString(const std::vector<double>& v);
 
 class CCPACSStringVector : private generated::CPACSStringVectorBase
 {

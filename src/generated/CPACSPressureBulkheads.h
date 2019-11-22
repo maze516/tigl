@@ -33,7 +33,7 @@ namespace generated
     // This class is used in:
     // CPACSStructuralElements
 
-    // generated from /xsd:schema/xsd:complexType[742]
+    // generated from /xsd:schema/xsd:complexType[744]
     /// @brief pressureBulkheadsType
     /// 
     /// PressureBulkheads type, conteining pressure bulkheads

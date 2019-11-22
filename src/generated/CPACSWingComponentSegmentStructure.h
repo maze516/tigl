@@ -41,7 +41,7 @@ namespace generated
     // CPACSComponentSegment
     // CPACSTrailingEdgeDevice
 
-    // generated from /xsd:schema/xsd:complexType[943]
+    // generated from /xsd:schema/xsd:complexType[945]
     /// @brief Structure of the wing
     /// 
     /// wingComponentSegmentStructure type, containing the

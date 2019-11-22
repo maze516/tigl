@@ -33,7 +33,7 @@ namespace generated
     // This class is used in:
     // CPACSSheetList3D
 
-    // generated from /xsd:schema/xsd:complexType[807]
+    // generated from /xsd:schema/xsd:complexType[809]
     /// @brief sheet3DType
     /// 
     /// 

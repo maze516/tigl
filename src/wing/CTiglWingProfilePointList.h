@@ -42,6 +42,7 @@
 #include "CCPACSPointListXYZVector.h"
 #include "CCPACSPointListXYVector.h"
 #include "Cache.h"
+#include "generated/CPACSCurvePointListXYZ.h"
 
 namespace tigl
 {
@@ -54,7 +55,7 @@ class CTiglWingProfilePointList : public ITiglWingProfileAlgo
 
 public:
     // Constructor
-    TIGL_EXPORT CTiglWingProfilePointList(const CCPACSWingProfile& profile, const CCPACSPointListXYZVector& cpacsPointlist);
+    TIGL_EXPORT CTiglWingProfilePointList(const CCPACSWingProfile& profile, const CCPACSCurvePointListXYZ& cpacsPointlist);
     TIGL_EXPORT CTiglWingProfilePointList(const CCPACSNacelleProfile& profile, const CCPACSPointListXYVector& cpacsPointlist);
 
     TIGL_EXPORT void Invalidate() override;

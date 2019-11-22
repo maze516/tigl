@@ -31,6 +31,8 @@ namespace generated
 {
     // This class is used in:
     // CPACSCst2D
+    // CPACSCurveParamPointMap
+    // CPACSCurvePointListXYZ
     // CPACSEmissivityMap
     // CPACSPointListRelXYZVector
     // CPACSPointListXYVector
@@ -38,7 +40,7 @@ namespace generated
     // CPACSRotorBladeAttachment
     // CPACSSpecificHeatMap
 
-    // generated from /xsd:schema/xsd:complexType[851]
+    // generated from /xsd:schema/xsd:complexType[853]
     /// @brief stringVectorBaseType
     /// 
     /// Base type for string vector nodes (including maptype

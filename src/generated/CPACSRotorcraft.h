@@ -33,7 +33,7 @@ namespace generated
     // This class is used in:
     // CPACSVehicles
 
-    // generated from /xsd:schema/xsd:complexType[792]
+    // generated from /xsd:schema/xsd:complexType[794]
     /// @brief rotorcraftType
     /// 
     /// Rotorcraft type, containing all the rotorcraft models.

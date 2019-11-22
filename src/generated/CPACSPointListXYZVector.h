@@ -27,8 +27,6 @@ namespace tigl
 namespace generated
 {
     // This class is used in:
-    // CPACSProfileGeometry
-
     // generated from /xsd:schema/xsd:complexType[721]
     /// @brief List of 3D points, kept in three coordinate vecors (x,
     /// y, z)

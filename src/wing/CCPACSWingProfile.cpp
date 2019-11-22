@@ -60,8 +60,10 @@ namespace tigl
 {
     namespace
     {
-        void OrderPoints(std::vector<CTiglPoint>& vec)
+        void OrderPoints(CCPACSCurvePointListXYZ& curvePointList)
         {
+            std::vector<CTiglPoint>& vec = curvePointList.AsVector();
+
             // points with maximal/minimal y-component
             std::size_t minZIndex = 0;
             std::size_t maxZIndex = 0;
@@ -82,6 +84,8 @@ namespace tigl
             if (minZIndex > maxZIndex) {
                 LOG(WARNING) << "The points don't seem to be ordered in a mathematical positive sense.";
                 std::reverse(vec.begin(), vec.end());
+
+                // TODO: Reverse also parameter maps and kinks
             }
         }
     }
@@ -114,7 +118,7 @@ void CCPACSWingProfile::ReadCPACS(const TixiDocumentHandle& tixiHandle, const st
     generated::CPACSProfileGeometry::ReadCPACS(tixiHandle, xpath);
 
     if (m_pointList_choice1) {
-        OrderPoints(m_pointList_choice1->AsVector());
+        OrderPoints(*m_pointList_choice1);
     }
 }
 

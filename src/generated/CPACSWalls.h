@@ -33,7 +33,7 @@ namespace generated
     // This class is used in:
     // CPACSFuselageStructure
 
-    // generated from /xsd:schema/xsd:complexType[1002]
+    // generated from /xsd:schema/xsd:complexType[1004]
     class CPACSWalls
     {
     public:

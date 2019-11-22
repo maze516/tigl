@@ -66,6 +66,7 @@
 #include "BRepBuilderAPI_MakeWire.hxx"
 #include "BRepBndLib.hxx"
 #include "ShapeFix_Wire.hxx"
+#include "generated/CPACSCurvePointListXYZ.h"
 
 
 inline gp_Pnt operator+(const gp_Pnt& a, const gp_Pnt& b)
@@ -84,7 +85,7 @@ const double CTiglWingProfilePointList::c_trailingEdgeRelGap = 1E-2;
 const double CTiglWingProfilePointList::c_blendingDistance = 0.1;
 
 // Constructor
-CTiglWingProfilePointList::CTiglWingProfilePointList(const CCPACSWingProfile& profile, const CCPACSPointListXYZVector& cpacsPointList)
+CTiglWingProfilePointList::CTiglWingProfilePointList(const CCPACSWingProfile& profile, const CCPACSCurvePointListXYZ& cpacsPointList)
     : coordinates(cpacsPointList.AsVector())
     , profileWireAlgo(new CTiglInterpolateBsplineWire)
     , profileUID(profile.GetUID())
