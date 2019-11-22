@@ -31,10 +31,10 @@
 
 namespace tigl
 {
+class CCPACSControlSurfaceOuterShapeTrailingEdge;
+
 namespace generated
 {
-    class CPACSControlSurfaceOuterShapeTrailingEdge;
-
     // This class is used in:
     // CPACSControlSurfaceOuterShapeTrailingEdge
 
@@ -62,13 +62,13 @@ namespace generated
     class CPACSControlSurfaceBorderTrailingEdge
     {
     public:
-        TIGL_EXPORT CPACSControlSurfaceBorderTrailingEdge(CPACSControlSurfaceOuterShapeTrailingEdge* parent);
+        TIGL_EXPORT CPACSControlSurfaceBorderTrailingEdge(CCPACSControlSurfaceOuterShapeTrailingEdge* parent);
 
         TIGL_EXPORT virtual ~CPACSControlSurfaceBorderTrailingEdge();
 
-        TIGL_EXPORT CPACSControlSurfaceOuterShapeTrailingEdge* GetParent();
+        TIGL_EXPORT CCPACSControlSurfaceOuterShapeTrailingEdge* GetParent();
 
-        TIGL_EXPORT const CPACSControlSurfaceOuterShapeTrailingEdge* GetParent() const;
+        TIGL_EXPORT const CCPACSControlSurfaceOuterShapeTrailingEdge* GetParent() const;
 
         TIGL_EXPORT virtual void ReadCPACS(const TixiDocumentHandle& tixiHandle, const std::string& xpath);
         TIGL_EXPORT virtual void WriteCPACS(const TixiDocumentHandle& tixiHandle, const std::string& xpath) const;
@@ -104,7 +104,7 @@ namespace generated
         TIGL_EXPORT virtual void RemoveAirfoil();
 
     protected:
-        CPACSControlSurfaceOuterShapeTrailingEdge* m_parent;
+        CCPACSControlSurfaceOuterShapeTrailingEdge* m_parent;
 
         /// Relative spanwise inner/outer position of the
         /// leading edge of the control surface. Reference is eta/xsi from
@@ -137,7 +137,4 @@ namespace generated
 } // namespace generated
 
 // CPACSControlSurfaceBorderTrailingEdge is customized, use type CCPACSControlSurfaceBorderTrailingEdge directly
-
-// Aliases in tigl namespace
-using CCPACSControlSurfaceOuterShapeTrailingEdge = generated::CPACSControlSurfaceOuterShapeTrailingEdge;
 } // namespace tigl

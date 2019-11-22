@@ -16,8 +16,8 @@
 // limitations under the License.
 
 #include <cassert>
+#include "CCPACSControlSurfaceOuterShapeTrailingEdge.h"
 #include "CPACSControlSurfaceBorderTrailingEdge.h"
-#include "CPACSControlSurfaceOuterShapeTrailingEdge.h"
 #include "CTiglError.h"
 #include "CTiglLogging.h"
 #include "TixiHelper.h"
@@ -26,7 +26,7 @@ namespace tigl
 {
 namespace generated
 {
-    CPACSControlSurfaceBorderTrailingEdge::CPACSControlSurfaceBorderTrailingEdge(CPACSControlSurfaceOuterShapeTrailingEdge* parent)
+    CPACSControlSurfaceBorderTrailingEdge::CPACSControlSurfaceBorderTrailingEdge(CCPACSControlSurfaceOuterShapeTrailingEdge* parent)
         : m_etaLE(reinterpret_cast<CCPACSControlSurfaceBorderTrailingEdge*>(this))
         , m_xsiLE(reinterpret_cast<CCPACSControlSurfaceBorderTrailingEdge*>(this))
     {
@@ -38,12 +38,12 @@ namespace generated
     {
     }
 
-    const CPACSControlSurfaceOuterShapeTrailingEdge* CPACSControlSurfaceBorderTrailingEdge::GetParent() const
+    const CCPACSControlSurfaceOuterShapeTrailingEdge* CPACSControlSurfaceBorderTrailingEdge::GetParent() const
     {
         return m_parent;
     }
 
-    CPACSControlSurfaceOuterShapeTrailingEdge* CPACSControlSurfaceBorderTrailingEdge::GetParent()
+    CCPACSControlSurfaceOuterShapeTrailingEdge* CPACSControlSurfaceBorderTrailingEdge::GetParent()
     {
         return m_parent;
     }

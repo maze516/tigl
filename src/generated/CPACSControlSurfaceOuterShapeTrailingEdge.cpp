@@ -27,8 +27,8 @@ namespace tigl
 namespace generated
 {
     CPACSControlSurfaceOuterShapeTrailingEdge::CPACSControlSurfaceOuterShapeTrailingEdge(CCPACSTrailingEdgeDevice* parent)
-        : m_innerBorder(this)
-        , m_outerBorder(this)
+        : m_innerBorder(reinterpret_cast<CCPACSControlSurfaceOuterShapeTrailingEdge*>(this))
+        , m_outerBorder(reinterpret_cast<CCPACSControlSurfaceOuterShapeTrailingEdge*>(this))
     {
         //assert(parent != NULL);
         m_parent = parent;
