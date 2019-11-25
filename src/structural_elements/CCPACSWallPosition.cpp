@@ -16,8 +16,6 @@
 * limitations under the License.
 */
 
-#pragma once
-
 #include "CNamedShape.h"
 #include "CTiglUIDManager.h"
 #include "CCPACSWallPosition.h"
