@@ -13,7 +13,7 @@ void CCPACSCurvePointListXYZ::ReadCPACS(const TixiDocumentHandle &tixiHandle, co
 {
     generated::CPACSCurvePointListXYZ::ReadCPACS(tixiHandle, xpath);
 
-    //m_kinksVec.clear();
+    m_kinksVec.clear();
 }
 
 const std::vector<double>& CCPACSCurvePointListXYZ::GetKinksAsVector() const
