@@ -57,7 +57,11 @@ namespace generated
         TIGL_EXPORT virtual void RemoveParameterMap();
 
     protected:
+        /// Curve parameters at which the curve has a kink. To define a kink at a specific point,
+        /// the parameterMap has to be used that associates a point with a parameter.
         boost::optional<CCPACSStringVector>       m_kinks;
+
+        /// Map between point index and curve parameter.
         boost::optional<CCPACSCurveParamPointMap> m_parameterMap;
 
     private:
@@ -69,6 +73,5 @@ namespace generated
     };
 } // namespace generated
 
-// Aliases in tigl namespace
-using CCPACSCurvePointListXYZ = generated::CPACSCurvePointListXYZ;
+// CPACSCurvePointListXYZ is customized, use type CCPACSCurvePointListXYZ directly
 } // namespace tigl

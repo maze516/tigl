@@ -37,6 +37,7 @@
 #include "CCPACSWingProfile.h"
 #include "CCPACSNacelleProfile.h"
 #include "tiglcommonfunctions.h"
+#include "CCPACSCurvePointListXYZ.h"
 
 #include "gp_Pnt2d.hxx"
 #include "gp_Vec2d.hxx"
@@ -66,7 +67,6 @@
 #include "BRepBuilderAPI_MakeWire.hxx"
 #include "BRepBndLib.hxx"
 #include "ShapeFix_Wire.hxx"
-#include "generated/CPACSCurvePointListXYZ.h"
 
 
 inline gp_Pnt operator+(const gp_Pnt& a, const gp_Pnt& b)

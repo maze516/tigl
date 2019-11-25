@@ -42,13 +42,13 @@
 #include "CCPACSPointListXYZVector.h"
 #include "CCPACSPointListXYVector.h"
 #include "Cache.h"
-#include "generated/CPACSCurvePointListXYZ.h"
 
 namespace tigl
 {
 
 class CCPACSWingProfile;
 class CCPACSNacelleProfile;
+class CCPACSCurvePointListXYZ;
 
 class CTiglWingProfilePointList : public ITiglWingProfileAlgo
 {
@@ -138,4 +138,3 @@ private:
 } // end namespace tigl
 
 #endif // CCPACSWINGPROFILEPOINTLIST_H
-

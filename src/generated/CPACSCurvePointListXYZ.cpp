@@ -64,7 +64,7 @@ namespace generated
     void CPACSCurvePointListXYZ::WriteCPACS(const TixiDocumentHandle& tixiHandle, const std::string& xpath) const
     {
         // write base
-        CPACSPointListXYZVector::WriteCPACS(tixiHandle, xpath);
+        CCPACSPointListXYZVector::WriteCPACS(tixiHandle, xpath);
 
         // write element kinks
         if (m_kinks) {

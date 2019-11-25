@@ -32,6 +32,7 @@ CPACSGenericGeometryComponents     CCPACSExternalObjects
 CPACSEtaIsoLine                    CCPACSEtaIsoLine
 CPACSXsiIsoLine                    CCPACSXsiIsoLine
 CPACSCurveParamPointMap            CCPACSCurveParamPointMap
+CPACSCurvePointListXYZ             CCPACSCurvePointListXYZ
 
 CPACSFuselage                      CCPACSFuselage
 CPACSFuselages                     CCPACSFuselages
