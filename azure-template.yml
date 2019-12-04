@@ -1,0 +1,227 @@
+parameters:
+  name: 'TiGL Build Job'
+  
+  # build agent, choose from https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+  vmImage: 'Ubuntu-18.04'
+  
+  # dependencies
+  python: '=3.6'
+  tixi3: '>=3.0.3'
+  qt: '=5.9.7'
+  pythonocc: '=0.17.3'
+  doxygen: '>=1.8.0'
+  swig: '>=3.0.11'
+  oce: '=0.17.2'
+  
+  
+jobs:
+- job: ${{ parameters.name }}
+  timeoutInMinutes: 360
+
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+    
+  variables:
+    CCACHE_DIR: $(Pipeline.Workspace)/ccache
+    CLCACHE_DIR: $(Pipeline.Workspace)\clcache
+    CLCACHE_SERVER: 1
+    CLCACHE_HARDLINK: 1
+    CMAKE_TIGL_ARGS: "-DCMAKE_BUILD_TYPE=Release -DOCE_STATIC_LIBS=ON -DTIGL_BUILD_TESTS=ON -DTIGL_CONCAT_GENERATED_FILES=ON -DTIGL_BINDINGS_PYTHON_INTERNAL=ON -DTIGL_BINDINGS_MATLAB=ON -DTIGL_BINDINGS_JAVA=ON"
+
+  steps: 
+  
+  - checkout: self
+    submodules: recursive
+    
+  # set nightly build flag for scheduled builds
+  - ${{ if eq(variables['Build.Reason'], 'Schedule') }}:
+    - script: |
+        echo "##vso[task.setvariable variable=CMAKE_TIGL_ARGS]$(CMAKE_TIGL_ARGS) -DTIGL_NIGHTLY=ON"
+        displayName: Set nightly build flag
+    
+  # install opengl dev libs on Ubuntu
+  
+  - ${{ if contains(parameters.vmImage, 'Ubuntu') }}:
+    - bash: sudo apt-get update &&  sudo apt-get install -y --force-yes libglu1-mesa-dev freeglut3-dev mesa-common-dev
+      displayName: Install libglu1-mesa-dev freeglut3-dev mesa-common-dev  
+    
+  #activate conda
+  
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'Ubuntu')) }}:
+    - bash: echo "##vso[task.prependpath]$CONDA/bin"
+      displayName: 'Add conda to PATH'
+      
+  - ${{ if contains(parameters.vmImage, 'win') }}:
+    - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
+      displayName: 'Add conda to PATH'
+  
+  # macOS ownership workaround
+  
+  - ${{ if contains(parameters.vmImage, 'macOS') }}:
+    - bash: sudo chown -R $USER $CONDA
+      displayName: 'MacOS ownership workaround'
+      
+    #- script: /bin/bash -c "sudo xcode-select -s /Applications/Xcode_9.4.1.app/Contents/Developer"
+    #  displayName: 'Select Xcode version'
+
+  # configure conda and install dependencies  
+  - script: |
+        conda config --set always_yes yes --set changeps1 no
+        conda update -q conda
+        conda info -a
+        conda create --yes --name build_env python${{ parameters.python }} pythonocc-core${{ parameters.pythonocc }} tixi3${{ parameters.tixi3 }} doxygen${{ parameters.doxygen }} swig${{ parameters.swig }} qt${{ parameters.qt }} oce${{ parameters.oce }} doxygen${{ parameters.doxygen }} ninja -c dlr-sc -c dlr-sc/label/tigl-dev
+        conda list -n build_env
+    displayName: 'Install dependencies into Anaconda environment'
+
+  # install clcache / ccache
+  
+  - ${{ if contains(parameters.vmImage, 'Ubuntu') }}:
+    - bash: |
+        sudo apt-get install ccache -y    
+        echo "##vso[task.prependpath]/usr/lib/ccache"
+      displayName: Install ccache and update PATH to use linked versions of gcc, cc, etc
+    
+  - ${{ if contains(parameters.vmImage, 'macOS') }}:
+    - bash: |
+        brew install zstd libb2
+        brew install --HEAD ccache
+        echo "##vso[task.prependpath]/usr/local/opt/ccache/libexec"
+      displayName: Install ccache and update PATH to use linked versions of gcc, cc, etc
+      
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'Ubuntu')) }}:
+    - task: Cache@2
+      inputs:
+        key: 'ccache | "$(Agent.OS)" | "$(Build.SourceVersion)"'
+        restoreKeys: 'ccache | "$(Agent.OS)"'
+        path: $(CCACHE_DIR)
+      displayName: "ccache"
+  
+  - ${{ if contains(parameters.vmImage, 'win') }}:
+    - script: |
+          call activate build_env
+          pip install git+https://github.com/frerich/clcache.git
+      displayName: 'Install clcache via pip'
+      
+    - task: Cache@2
+      inputs:
+        key: 'clcache | "$(Agent.OS)" | "$(Build.SourceVersion)"'
+        restoreKeys: 'clcache | "$(Agent.OS)"'
+        path: $(CLCACHE_DIR)
+      displayName: "clcache"      
+
+  # run cmake
+  
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'Ubuntu')) }}:
+    - bash: |
+        source activate build_env
+        export CMAKE_PREFIX_PATH=${CONDA_PREFIX}/lib:${CONDA_PREFIX}/include
+        cd $(Agent.BuildDirectory)
+        mkdir build
+        cd build
+        cmake $(Build.Repository.LocalPath) -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_INSTALL_PREFIX=install -DPythonOCC_SOURCE_DIR=${CONDA_PREFIX}/src/pythonocc-core $(CMAKE_TIGL_ARGS)
+      displayName: 'Run CMake'
+  
+  - ${{ if contains(parameters.vmImage, 'win') }}:  
+    - script: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call activate build_env
+        set CC=clcache.exe
+        set CXX=clcache.exe
+        clcache.exe -s
+        powershell.exe -Command "Start-Process clcache-server"
+        set CMAKE_PREFIX_PATH=%CONDA_PREFIX%/lib:%CONDA_PREFIX%/include
+        cd $(Agent.BuildDirectory)
+        mkdir build
+        cd build
+        cmake $(Build.Repository.LocalPath) -G "Ninja" -DCMAKE_INSTALL_PREFIX=install $(CMAKE_TIGL_ARGS)
+      displayName: 'Run CMake'
+   
+  # build tigl 
+      
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'Ubuntu')) }}:    
+    - script: |
+        cd $(Agent.BuildDirectory)/build
+        cmake --build . -j 4 --config Release --target install
+      displayName: 'Build TiGL'
+    
+  # on windows, we need to set the environment appropriately, so that clcache finds the correct compiler
+  - ${{ if contains(parameters.vmImage, 'win') }}:  
+    - script: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        call activate build_env
+        cd $(Agent.BuildDirectory)/build
+        cmake --build . -j 4 --config Release --target install
+        clcache.exe -s
+      displayName: 'Build TiGL'
+      
+  # Run Unit Tests
+  
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'Ubuntu')) }}:
+    - script: |
+        source activate build_env
+        cd $(Agent.BuildDirectory)/build
+        cmake --build . --target tigl-java-demo
+        cd tests/unittests/
+        ./TiGL-unittests --gtest_output=xml:test_results.xml
+      displayName: 'Run Unit Tests'
+        
+  - ${{ if contains(parameters.vmImage, 'win') }}:  
+    - script: |
+        set PATH=$(Agent.BuildDirectory)\build\install\bin;%PATH%
+        cd $(Agent.BuildDirectory)\build
+        cmake --build . --target tigl-java-demo
+        cd tests\unittests
+        .\TiGL-unittests.exe --gtest_output=xml:test_results.xml
+      displayName: 'Run Unit Tests'
+      
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/test_*.xml'
+      testRunTitle: ${{ parameters.name }}
+    displayName: Publish Test Results
+      
+  # Upload artifacts
+  
+  - ${{ if contains(parameters.vmImage, 'macOS') }}:  
+    - script: |
+        cd $(Agent.BuildDirectory)/build
+        cmake --build . --target doc
+        cmake --build . --target package
+      displayName: 'Create Package'
+      
+  # note: need to explicitly call CPack from CMake dir, because of conflict with chocolatey's cpack.exe
+  - ${{ if contains(parameters.vmImage, 'win') }}:  
+    - script: |
+        call activate build_env
+        cd $(Agent.BuildDirectory)\build
+        cmake --build . --target doc
+        "C:\Program Files\CMake\bin\cpack.exe" -G ZIP
+        dir
+      displayName: 'Create Package'
+       
+  #  - The "publish" keyword does not support wildcards, so I have to copy the files to an output directory and artifact that.
+  #  - The "contents" keyword of the "CopyFiles" task requires platform dependent directory seperators ( \ on win, / on Unix)
+  - ${{ if contains(parameters.vmImage, 'win') }}:  
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Agent.BuildDirectory)\build'
+        Contents: '*.zip'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+      displayName: Copy Build artifact
+      
+  - ${{ if contains(parameters.vmImage, 'macOS') }}: 
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Agent.BuildDirectory)/build'
+        Contents: '*.dmg'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+      displayName: Copy Build artifact
+      
+  - ${{ if or(contains(parameters.vmImage, 'macOS'),contains(parameters.vmImage, 'win')) }}: 
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: TiGL-dev-${{ parameters.name }}
+      displayName: 'Upload Build artifact'
+      
+      
+     

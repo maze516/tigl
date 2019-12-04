@@ -1,0 +1,43 @@
+# schedule nightly build
+
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master 
+
+# start templated jobs
+    
+jobs:
+- template: azure-template.yml
+  parameters:
+    name: Ubuntu_18_04
+    vmImage: 'ubuntu-18.04'
+
+- template: azure-template.yml
+  parameters:
+    name: macOS_10_14
+    vmImage: 'macOS-10.14'
+    
+- template: azure-template.yml
+  parameters:
+    name: Win64_VS2017
+    vmImage: 'vs2017-win2016'
+    
+# TODO
+
+# - switch between static and dynamic oce? see appveyor.yml
+# - 32bit/64bit?
+
+# ISSUES 
+
+# - Mac OS unit test failure with XCode/AppleClang
+
+# NICE TO HAVES
+
+# - upload nightly builds to sourceforge?
+# - Releases
+#   - upload doc to tigl home page + sourceforge?
+#   - trigger conda build + OpenSuse Build Service on new tag?
+#   - upload artifacts as github assets?

@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/DLR-SC/tigl.svg?branch=master)](https://travis-ci.org/DLR-SC/tigl)
 [![Build status](https://ci.appveyor.com/api/projects/status/twbrx01mbb043uj5/branch/master?svg=true)](https://ci.appveyor.com/project/rainman110/tigl/branch/master)
+[![Build Status](https://dev.azure.com/DLR-SC/tigl/_apis/build/status/DLR-SC.tigl?branchName=master)](https://dev.azure.com/DLR-SC/tigl/_build/latest?definitionId=1&branchName=master)
 [![Apache 2.0](https://img.shields.io/crates/l/k)](https://github.com/DLR-SC/tigl/blob/cpacs_3/LICENSE.txt)
 [![Install with conda](https://anaconda.org/dlr-sc/tigl/badges/installer/conda.svg)](https://conda.anaconda.org/dlr-sc/tigl3)
 [![Cite-us](https://img.shields.io/badge/doi-10.1007%2Fs11786--019--00401--y-blue)](https://doi.org/10.1007/s11786-019-00401-y) 
