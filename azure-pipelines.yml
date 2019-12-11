@@ -38,6 +38,7 @@ jobs:
 
 # - upload nightly builds to sourceforge?
 # - Releases
+#   - upload artifacts as github assets?
+#   - automatically create github Release notes from changelog?
 #   - upload doc to tigl home page + sourceforge?
 #   - trigger conda build + OpenSuse Build Service on new tag?
-#   - upload artifacts as github assets?

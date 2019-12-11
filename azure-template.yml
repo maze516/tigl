@@ -12,6 +12,9 @@ parameters:
   doxygen: '>=1.8.0'
   swig: '>=3.0.11'
   oce: '=0.17.2'
+  ninja: ''
+  freeimageplus: ''
+  
   
   
 jobs:
@@ -69,7 +72,7 @@ jobs:
         conda config --set always_yes yes --set changeps1 no
         conda update -q conda
         conda info -a
-        conda create --yes --name build_env python${{ parameters.python }} pythonocc-core${{ parameters.pythonocc }} tixi3${{ parameters.tixi3 }} doxygen${{ parameters.doxygen }} swig${{ parameters.swig }} qt${{ parameters.qt }} oce${{ parameters.oce }} doxygen${{ parameters.doxygen }} ninja -c dlr-sc -c dlr-sc/label/tigl-dev
+        conda create --yes --name build_env python${{ parameters.python }} pythonocc-core${{ parameters.pythonocc }} tixi3${{ parameters.tixi3 }} doxygen${{ parameters.doxygen }} swig${{ parameters.swig }} qt${{ parameters.qt }} oce${{ parameters.oce }} doxygen${{ parameters.doxygen }} freeimageplus${{ parameters.freeimageplus }} ninja${{ parameters.ninja }} -c dlr-sc -c dlr-sc/label/tigl-dev
         conda list -n build_env
     displayName: 'Install dependencies into Anaconda environment'
 
@@ -197,7 +200,6 @@ jobs:
         cd $(Agent.BuildDirectory)\build
         cmake --build . --target doc
         "C:\Program Files\CMake\bin\cpack.exe" -G ZIP
-        dir
       displayName: 'Create Package'
        
   #  - The "publish" keyword does not support wildcards, so I have to copy the files to an output directory and artifact that.
