@@ -27,8 +27,8 @@ namespace tigl
 namespace generated
 {
     CPACSControlSurfaceWingCutOut::CPACSControlSurfaceWingCutOut(CCPACSTrailingEdgeDevice* parent)
-        : m_upperSkin(this)
-        , m_lowerSkin(this)
+        : m_upperSkin(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this))
+        , m_lowerSkin(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this))
     {
         //assert(parent != NULL);
         m_parent = parent;
@@ -90,7 +90,7 @@ namespace generated
 
         // read element innerBorder
         if (tixi::TixiCheckElement(tixiHandle, xpath + "/innerBorder")) {
-            m_innerBorder = boost::in_place(this);
+            m_innerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));
             try {
                 m_innerBorder->ReadCPACS(tixiHandle, xpath + "/innerBorder");
             } catch(const std::exception& e) {
@@ -101,7 +101,7 @@ namespace generated
 
         // read element outerBorder
         if (tixi::TixiCheckElement(tixiHandle, xpath + "/outerBorder")) {
-            m_outerBorder = boost::in_place(this);
+            m_outerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));
             try {
                 m_outerBorder->ReadCPACS(tixiHandle, xpath + "/outerBorder");
             } catch(const std::exception& e) {
@@ -255,7 +255,7 @@ namespace generated
     CCPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetInnerBorder(CreateIfNotExistsTag)
     {
         if (!m_innerBorder)
-            m_innerBorder = boost::in_place(this);
+            m_innerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));
         return *m_innerBorder;
     }
 
@@ -267,7 +267,7 @@ namespace generated
     CCPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetOuterBorder(CreateIfNotExistsTag)
     {
         if (!m_outerBorder)
-            m_outerBorder = boost::in_place(this);
+            m_outerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));
         return *m_outerBorder;
     }
 

@@ -115,6 +115,5 @@ namespace generated
     };
 } // namespace generated
 
-// Aliases in tigl namespace
-using CCPACSControlSurfaceWingCutOut = generated::CPACSControlSurfaceWingCutOut;
+// CPACSControlSurfaceWingCutOut is customized, use type CCPACSControlSurfaceWingCutOut directly
 } // namespace tigl

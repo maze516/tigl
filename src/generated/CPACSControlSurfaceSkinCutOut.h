@@ -25,10 +25,10 @@
 
 namespace tigl
 {
+class CCPACSControlSurfaceWingCutOut;
+
 namespace generated
 {
-    class CPACSControlSurfaceWingCutOut;
-
     // This class is used in:
     // CPACSControlSurfaceWingCutOut
 
@@ -49,13 +49,13 @@ namespace generated
     class CPACSControlSurfaceSkinCutOut
     {
     public:
-        TIGL_EXPORT CPACSControlSurfaceSkinCutOut(CPACSControlSurfaceWingCutOut* parent);
+        TIGL_EXPORT CPACSControlSurfaceSkinCutOut(CCPACSControlSurfaceWingCutOut* parent);
 
         TIGL_EXPORT virtual ~CPACSControlSurfaceSkinCutOut();
 
-        TIGL_EXPORT CPACSControlSurfaceWingCutOut* GetParent();
+        TIGL_EXPORT CCPACSControlSurfaceWingCutOut* GetParent();
 
-        TIGL_EXPORT const CPACSControlSurfaceWingCutOut* GetParent() const;
+        TIGL_EXPORT const CCPACSControlSurfaceWingCutOut* GetParent() const;
 
         TIGL_EXPORT virtual void ReadCPACS(const TixiDocumentHandle& tixiHandle, const std::string& xpath);
         TIGL_EXPORT virtual void WriteCPACS(const TixiDocumentHandle& tixiHandle, const std::string& xpath) const;
@@ -72,7 +72,7 @@ namespace generated
         TIGL_EXPORT virtual void SetXsiOuterBorder_choice2(const boost::optional<double>& value);
 
     protected:
-        CPACSControlSurfaceWingCutOut* m_parent;
+        CCPACSControlSurfaceWingCutOut* m_parent;
 
         /// Reference to a spar, defining the skin cut
         /// out.
@@ -96,7 +96,4 @@ namespace generated
 } // namespace generated
 
 // CPACSControlSurfaceSkinCutOut is customized, use type CCPACSControlSurfaceSkinCutout directly
-
-// Aliases in tigl namespace
-using CCPACSControlSurfaceWingCutOut = generated::CPACSControlSurfaceWingCutOut;
 } // namespace tigl
