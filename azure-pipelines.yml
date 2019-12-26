@@ -17,8 +17,8 @@ jobs:
 
 - template: azure-template.yml
   parameters:
-    name: macOS_10_14
-    vmImage: 'macOS-10.14'
+    name: macOS_10_13
+    vmImage: 'macOS-10.13'
     
 - template: azure-template.yml
   parameters:
