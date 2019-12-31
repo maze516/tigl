@@ -22,6 +22,7 @@
 #include "CCPACSTrailingEdgeDevice.h"
 
 #include "CNamedShape.h"
+#include "Debugging.h"
 #include <cassert>
 
 namespace tigl
@@ -66,9 +67,8 @@ TopoDS_Wire CCPACSControlSurfaceBorderTrailingEdge::GetWire(PNamedShape wingShap
     }
 
 #ifdef DEBUG
-    std::stringstream filenamestr;
-    filenamestr << _uid << "_wire.brep";
-    BRepTools::Write(wire, filenamestr.str().c_str());
+    DEBUG_SCOPE(debug);
+    debug.dumpShape(wire, "controldevice-border-wire");
 #endif
 
     return wire;
