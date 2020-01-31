@@ -135,6 +135,7 @@ void CCPACSWing::Invalidate()
 {
     invalidated = true;
     m_segments.Invalidate();
+    Reset();
     if (m_positionings)
         m_positionings->Invalidate();
     if (m_componentSegments)
