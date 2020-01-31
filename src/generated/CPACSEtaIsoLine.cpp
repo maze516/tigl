@@ -17,10 +17,10 @@
 
 #include <cassert>
 #include "CCPACSControlSurfaceBorderTrailingEdge.h"
-#include "CCPACSControlSurfaceSkinCutOutBorder.h"
-#include "CCPACSControlSurfaceTrackType.h"
 #include "CCPACSWingCellPositionSpanwise.h"
 #include "CPACSControlSurfaceAirfoil.h"
+#include "CPACSControlSurfaceSkinCutOutBorder.h"
+#include "CPACSControlSurfaceTrackType.h"
 #include "CPACSCutOutProfile.h"
 #include "CPACSEtaIsoLine.h"
 #include "CPACSSparCell.h"
@@ -56,20 +56,20 @@ namespace generated
         m_parentType = &typeid(CCPACSControlSurfaceBorderTrailingEdge);
     }
 
-    CPACSEtaIsoLine::CPACSEtaIsoLine(CCPACSControlSurfaceSkinCutOutBorder* parent)
+    CPACSEtaIsoLine::CPACSEtaIsoLine(CPACSControlSurfaceSkinCutOutBorder* parent)
         : m_eta(0)
     {
         //assert(parent != NULL);
         m_parent = parent;
-        m_parentType = &typeid(CCPACSControlSurfaceSkinCutOutBorder);
+        m_parentType = &typeid(CPACSControlSurfaceSkinCutOutBorder);
     }
 
-    CPACSEtaIsoLine::CPACSEtaIsoLine(CCPACSControlSurfaceTrackType* parent)
+    CPACSEtaIsoLine::CPACSEtaIsoLine(CPACSControlSurfaceTrackType* parent)
         : m_eta(0)
     {
         //assert(parent != NULL);
         m_parent = parent;
-        m_parentType = &typeid(CCPACSControlSurfaceTrackType);
+        m_parentType = &typeid(CPACSControlSurfaceTrackType);
     }
 
     CPACSEtaIsoLine::CPACSEtaIsoLine(CPACSCutOutProfile* parent)

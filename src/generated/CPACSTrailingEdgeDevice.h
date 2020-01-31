@@ -32,10 +32,11 @@
 namespace tigl
 {
 class CTiglUIDManager;
-class CCPACSTrailingEdgeDevices;
 
 namespace generated
 {
+    class CPACSTrailingEdgeDevices;
+
     // This class is used in:
     // CPACSTrailingEdgeDevices
 
@@ -62,13 +63,13 @@ namespace generated
     class CPACSTrailingEdgeDevice
     {
     public:
-        TIGL_EXPORT CPACSTrailingEdgeDevice(CCPACSTrailingEdgeDevices* parent, CTiglUIDManager* uidMgr);
+        TIGL_EXPORT CPACSTrailingEdgeDevice(CPACSTrailingEdgeDevices* parent, CTiglUIDManager* uidMgr);
 
         TIGL_EXPORT virtual ~CPACSTrailingEdgeDevice();
 
-        TIGL_EXPORT CCPACSTrailingEdgeDevices* GetParent();
+        TIGL_EXPORT CPACSTrailingEdgeDevices* GetParent();
 
-        TIGL_EXPORT const CCPACSTrailingEdgeDevices* GetParent() const;
+        TIGL_EXPORT const CPACSTrailingEdgeDevices* GetParent() const;
 
         TIGL_EXPORT CTiglUIDManager& GetUIDManager();
         TIGL_EXPORT const CTiglUIDManager& GetUIDManager() const;
@@ -113,7 +114,7 @@ namespace generated
         TIGL_EXPORT virtual void RemoveTracks();
 
     protected:
-        CCPACSTrailingEdgeDevices* m_parent;
+        CPACSTrailingEdgeDevices* m_parent;
 
         CTiglUIDManager* m_uidMgr;
 
@@ -152,4 +153,7 @@ namespace generated
 } // namespace generated
 
 // CPACSTrailingEdgeDevice is customized, use type CCPACSTrailingEdgeDevice directly
+
+// Aliases in tigl namespace
+using CCPACSTrailingEdgeDevices = generated::CPACSTrailingEdgeDevices;
 } // namespace tigl

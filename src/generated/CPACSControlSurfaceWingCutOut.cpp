@@ -168,22 +168,22 @@ namespace generated
 
     }
 
-    const CCPACSControlSurfaceSkinCutout& CPACSControlSurfaceWingCutOut::GetUpperSkin() const
+    const CPACSControlSurfaceSkinCutOut& CPACSControlSurfaceWingCutOut::GetUpperSkin() const
     {
         return m_upperSkin;
     }
 
-    CCPACSControlSurfaceSkinCutout& CPACSControlSurfaceWingCutOut::GetUpperSkin()
+    CPACSControlSurfaceSkinCutOut& CPACSControlSurfaceWingCutOut::GetUpperSkin()
     {
         return m_upperSkin;
     }
 
-    const CCPACSControlSurfaceSkinCutout& CPACSControlSurfaceWingCutOut::GetLowerSkin() const
+    const CPACSControlSurfaceSkinCutOut& CPACSControlSurfaceWingCutOut::GetLowerSkin() const
     {
         return m_lowerSkin;
     }
 
-    CCPACSControlSurfaceSkinCutout& CPACSControlSurfaceWingCutOut::GetLowerSkin()
+    CPACSControlSurfaceSkinCutOut& CPACSControlSurfaceWingCutOut::GetLowerSkin()
     {
         return m_lowerSkin;
     }
@@ -208,22 +208,22 @@ namespace generated
         return m_cutOutProfiles;
     }
 
-    const boost::optional<CCPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetInnerBorder() const
+    const boost::optional<CPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetInnerBorder() const
     {
         return m_innerBorder;
     }
 
-    boost::optional<CCPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetInnerBorder()
+    boost::optional<CPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetInnerBorder()
     {
         return m_innerBorder;
     }
 
-    const boost::optional<CCPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetOuterBorder() const
+    const boost::optional<CPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetOuterBorder() const
     {
         return m_outerBorder;
     }
 
-    boost::optional<CCPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetOuterBorder()
+    boost::optional<CPACSControlSurfaceSkinCutOutBorder>& CPACSControlSurfaceWingCutOut::GetOuterBorder()
     {
         return m_outerBorder;
     }
@@ -252,7 +252,7 @@ namespace generated
         m_cutOutProfiles = boost::none;
     }
 
-    CCPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetInnerBorder(CreateIfNotExistsTag)
+    CPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetInnerBorder(CreateIfNotExistsTag)
     {
         if (!m_innerBorder)
             m_innerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));
@@ -264,7 +264,7 @@ namespace generated
         m_innerBorder = boost::none;
     }
 
-    CCPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetOuterBorder(CreateIfNotExistsTag)
+    CPACSControlSurfaceSkinCutOutBorder& CPACSControlSurfaceWingCutOut::GetOuterBorder(CreateIfNotExistsTag)
     {
         if (!m_outerBorder)
             m_outerBorder = boost::in_place(reinterpret_cast<CCPACSControlSurfaceWingCutOut*>(this));

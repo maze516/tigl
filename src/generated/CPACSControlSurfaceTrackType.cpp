@@ -29,7 +29,7 @@ namespace generated
 {
     CPACSControlSurfaceTrackType::CPACSControlSurfaceTrackType(CPACSControlSurfaceTracks* parent, CTiglUIDManager* uidMgr)
         : m_uidMgr(uidMgr)
-        , m_eta(reinterpret_cast<CCPACSControlSurfaceTrackType*>(this))
+        , m_eta(this)
     {
         //assert(parent != NULL);
         m_parent = parent;

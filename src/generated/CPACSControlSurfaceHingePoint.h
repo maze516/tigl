@@ -83,8 +83,7 @@ namespace generated
     };
 } // namespace generated
 
-// CPACSControlSurfaceHingePoint is customized, use type CCPACSControlSurfaceHingePoint directly
-
 // Aliases in tigl namespace
+using CCPACSControlSurfaceHingePoint = generated::CPACSControlSurfaceHingePoint;
 using CCPACSControlSurfacePath = generated::CPACSControlSurfacePath;
 } // namespace tigl

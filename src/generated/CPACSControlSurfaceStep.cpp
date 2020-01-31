@@ -16,8 +16,8 @@
 // limitations under the License.
 
 #include <cassert>
-#include "CCPACSControlSurfaceSteps.h"
 #include "CPACSControlSurfaceStep.h"
+#include "CPACSControlSurfaceSteps.h"
 #include "CTiglError.h"
 #include "CTiglLogging.h"
 #include "CTiglUIDManager.h"
@@ -27,7 +27,7 @@ namespace tigl
 {
 namespace generated
 {
-    CPACSControlSurfaceStep::CPACSControlSurfaceStep(CCPACSControlSurfaceSteps* parent, CTiglUIDManager* uidMgr)
+    CPACSControlSurfaceStep::CPACSControlSurfaceStep(CPACSControlSurfaceSteps* parent, CTiglUIDManager* uidMgr)
         : m_uidMgr(uidMgr)
         , m_relDeflection(0)
     {
@@ -39,12 +39,12 @@ namespace generated
     {
     }
 
-    const CCPACSControlSurfaceSteps* CPACSControlSurfaceStep::GetParent() const
+    const CPACSControlSurfaceSteps* CPACSControlSurfaceStep::GetParent() const
     {
         return m_parent;
     }
 
-    CCPACSControlSurfaceSteps* CPACSControlSurfaceStep::GetParent()
+    CPACSControlSurfaceSteps* CPACSControlSurfaceStep::GetParent()
     {
         return m_parent;
     }

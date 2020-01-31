@@ -63,7 +63,7 @@ namespace generated
 
         // read element etaLE
         if (tixi::TixiCheckElement(tixiHandle, xpath + "/etaLE")) {
-            m_etaLE_choice2 = boost::in_place(reinterpret_cast<CCPACSControlSurfaceSkinCutOutBorder*>(this));
+            m_etaLE_choice2 = boost::in_place(this);
             try {
                 m_etaLE_choice2->ReadCPACS(tixiHandle, xpath + "/etaLE");
             } catch(const std::exception& e) {
@@ -74,7 +74,7 @@ namespace generated
 
         // read element etaTE
         if (tixi::TixiCheckElement(tixiHandle, xpath + "/etaTE")) {
-            m_etaTE_choice2 = boost::in_place(reinterpret_cast<CCPACSControlSurfaceSkinCutOutBorder*>(this));
+            m_etaTE_choice2 = boost::in_place(this);
             try {
                 m_etaTE_choice2->ReadCPACS(tixiHandle, xpath + "/etaTE");
             } catch(const std::exception& e) {
@@ -217,7 +217,7 @@ namespace generated
     CCPACSEtaIsoLine& CPACSControlSurfaceSkinCutOutBorder::GetEtaLE_choice2(CreateIfNotExistsTag)
     {
         if (!m_etaLE_choice2)
-            m_etaLE_choice2 = boost::in_place(reinterpret_cast<CCPACSControlSurfaceSkinCutOutBorder*>(this));
+            m_etaLE_choice2 = boost::in_place(this);
         return *m_etaLE_choice2;
     }
 
@@ -229,7 +229,7 @@ namespace generated
     CCPACSEtaIsoLine& CPACSControlSurfaceSkinCutOutBorder::GetEtaTE_choice2(CreateIfNotExistsTag)
     {
         if (!m_etaTE_choice2)
-            m_etaTE_choice2 = boost::in_place(reinterpret_cast<CCPACSControlSurfaceSkinCutOutBorder*>(this));
+            m_etaTE_choice2 = boost::in_place(this);
         return *m_etaTE_choice2;
     }
 

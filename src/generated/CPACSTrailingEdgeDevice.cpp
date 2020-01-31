@@ -16,8 +16,8 @@
 // limitations under the License.
 
 #include <cassert>
-#include "CCPACSTrailingEdgeDevices.h"
 #include "CPACSTrailingEdgeDevice.h"
+#include "CPACSTrailingEdgeDevices.h"
 #include "CTiglError.h"
 #include "CTiglLogging.h"
 #include "CTiglUIDManager.h"
@@ -27,7 +27,7 @@ namespace tigl
 {
 namespace generated
 {
-    CPACSTrailingEdgeDevice::CPACSTrailingEdgeDevice(CCPACSTrailingEdgeDevices* parent, CTiglUIDManager* uidMgr)
+    CPACSTrailingEdgeDevice::CPACSTrailingEdgeDevice(CPACSTrailingEdgeDevices* parent, CTiglUIDManager* uidMgr)
         : m_uidMgr(uidMgr)
         , m_outerShape(reinterpret_cast<CCPACSTrailingEdgeDevice*>(this))
         , m_path(reinterpret_cast<CCPACSTrailingEdgeDevice*>(this), m_uidMgr)
@@ -41,12 +41,12 @@ namespace generated
         if (m_uidMgr) m_uidMgr->TryUnregisterObject(m_uID);
     }
 
-    const CCPACSTrailingEdgeDevices* CPACSTrailingEdgeDevice::GetParent() const
+    const CPACSTrailingEdgeDevices* CPACSTrailingEdgeDevice::GetParent() const
     {
         return m_parent;
     }
 
-    CCPACSTrailingEdgeDevices* CPACSTrailingEdgeDevice::GetParent()
+    CPACSTrailingEdgeDevices* CPACSTrailingEdgeDevice::GetParent()
     {
         return m_parent;
     }
