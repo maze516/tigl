@@ -97,6 +97,8 @@ CCPACSWing::CCPACSWing(CCPACSWings* parent, CTiglUIDManager* uidMgr)
     : generated::CPACSWing(parent, uidMgr)
     , CTiglRelativelyPositionedComponent(&m_parentUID, &m_transformation, &m_symmetry)
     , guideCurves(*this, &CCPACSWing::BuildGuideCurveWires)
+    , wingShapeWithCutouts(*this, &CCPACSWing::BuildWingWithCutouts)
+    , wingCleanShape(*this, &CCPACSWing::BuildFusedSegments)
     , rebuildFusedSegments(true)
     , rebuildFusedSegWEdge(true)
     , rebuildShells(true)
@@ -116,6 +118,8 @@ CCPACSWing::CCPACSWing(CCPACSRotorBlades* parent, CTiglUIDManager* uidMgr)
     , CTiglRelativelyPositionedComponent(&m_parentUID, &m_transformation, &m_symmetry)
     , configuration(&parent->GetConfiguration())
     , guideCurves(*this, &CCPACSWing::BuildGuideCurveWires)
+    , wingShapeWithCutouts(*this, &CCPACSWing::BuildWingWithCutouts)
+    , wingCleanShape(*this, &CCPACSWing::BuildFusedSegments)
     , rebuildFusedSegments(true)
     , rebuildFusedSegWEdge(true)
     , rebuildShells(true)
@@ -135,6 +139,8 @@ void CCPACSWing::Invalidate()
 {
     invalidated = true;
     m_segments.Invalidate();
+    wingCleanShape.clear();
+    wingShapeWithCutouts.clear();
     Reset();
     if (m_positionings)
         m_positionings->Invalidate();
@@ -303,7 +309,7 @@ CCPACSWingComponentSegment& CCPACSWing::GetComponentSegment(const std::string& u
 TopoDS_Shape & CCPACSWing::GetLoftWithLeadingEdge()
 {
     if (rebuildFusedSegWEdge) {
-        fusedSegmentWithEdge = BuildFusedSegments(true)->Shape();
+        fusedSegmentWithEdge = (*wingCleanShape)->Shape();
     }
     rebuildFusedSegWEdge = false;
     return fusedSegmentWithEdge;
@@ -352,24 +358,19 @@ PNamedShape CCPACSWing::BuildLoft() const
     if (buildFlaps) {
         return GroupedFlapsAndWingShapes();
     } else {
-        wingCleanShape = BuildFusedSegments(true);
-        return wingCleanShape;
+        return *wingCleanShape;
     }
 }
 
 TopoDS_Shape CCPACSWing::GetLoftWithCutouts()
 {
-    if (!wingShapeWithCutouts) {
-        GroupedFlapsAndWingShapes();
-    }
-    return wingShapeWithCutouts->Shape();
+    return (*wingShapeWithCutouts)->Shape();
 }
 
 // Builds a fused shape of all wing segments
-PNamedShape CCPACSWing::BuildFusedSegments(bool splitWingInUpperAndLower) const
+void CCPACSWing::BuildFusedSegments(PNamedShape& shape) const
 {
-    PNamedShape loft = CTiglWingBuilder(*this);
-    return loft;
+    shape = CTiglWingBuilder(*this);
 }
     
 // Builds a fused shape of all wing segments
@@ -405,22 +406,14 @@ void CCPACSWing::BuildUpperLowerShells()
 }
 
 
-void CCPACSWing::BuildWingWithCutouts() const
+void CCPACSWing::BuildWingWithCutouts(PNamedShape& result) const
 {
 
-    if (wingShapeWithCutouts) {
-        // nothing to do, because everything is built already.
-        return;
-    }
 
     if (NumberOfControlSurfaces(*this) == 0) {
         return;
     }
 
-    if ( !wingCleanShape ) {
-        // remember old wing loft
-        wingCleanShape = BuildFusedSegments(true);
-    }
 
     TopoDS_Compound allFlapPrisms;
     BRep_Builder compoundBuilderFlaps;
@@ -458,13 +451,13 @@ void CCPACSWing::BuildWingWithCutouts() const
         }
     }
 
-    CCutShape cutter(wingCleanShape, fusedBoxes);
+    CCutShape cutter(*wingCleanShape, fusedBoxes);
     cutter.Perform();
-    wingShapeWithCutouts = cutter.NamedShape();
-    for (int iFace = 0; iFace < static_cast<int>(wingShapeWithCutouts->GetFaceCount()); ++iFace) {
-        CFaceTraits ft = wingShapeWithCutouts->GetFaceTraits(iFace);
-        ft.SetOrigin(wingCleanShape);
-        wingShapeWithCutouts->SetFaceTraits(iFace, ft);
+    result = cutter.NamedShape();
+    for (int iFace = 0; iFace < static_cast<int>(result->GetFaceCount()); ++iFace) {
+        CFaceTraits ft = result->GetFaceTraits(iFace);
+        ft.SetOrigin(*wingCleanShape);
+        result->SetFaceTraits(iFace, ft);
     }
 }
 
@@ -476,7 +469,6 @@ PNamedShape CCPACSWing::GroupedFlapsAndWingShapes() const
         return PNamedShape();
     }
 
-    BuildWingWithCutouts();
     ListPNamedShape flapsAndWingShapes;
 
     for (const auto& componentSegment : GetComponentSegments()->GetComponentSegments()) {
@@ -496,7 +488,7 @@ PNamedShape CCPACSWing::GroupedFlapsAndWingShapes() const
        }
     }
 
-    flapsAndWingShapes.push_back(wingShapeWithCutouts);
+    flapsAndWingShapes.push_back(*wingShapeWithCutouts);
     auto loft = CGroupShapes(flapsAndWingShapes);
 
     return loft;
@@ -963,11 +955,7 @@ void CCPACSWing::SetBuildFlaps(bool build)
 
 PNamedShape CCPACSWing::GetWingCleanShape() const
 {
-    if (!wingCleanShape) {
-        BuildLoft();
-    }
-
-    return wingCleanShape;
+    return *wingCleanShape;
 }
 
 namespace

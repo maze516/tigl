@@ -182,7 +182,7 @@ protected:
     void Update();
 
     // Adds all Segments of this wing to one shape
-    PNamedShape BuildFusedSegments(bool splitWingInUpperAndLower) const;
+    void BuildFusedSegments(PNamedShape& ) const;
         
     PNamedShape BuildLoft() const override;
         
@@ -191,7 +191,7 @@ protected:
 private:
     // get short name for loft
     std::string GetShortShapeName() const;
-    void BuildWingWithCutouts() const;
+    void BuildWingWithCutouts(PNamedShape&) const;
     // Adds all Segments of this wing and flaps to one shape
     PNamedShape GroupedFlapsAndWingShapes() const;
 
@@ -203,9 +203,8 @@ private:
     TopoDS_Shape                   lowerShape;
     Cache<TopoDS_Compound, CCPACSWing> guideCurves;
 
-    // TODO: These two should go into a cache
-    mutable PNamedShape            wingShapeWithCutouts;     /**< Wing without flaps / flaps removed */
-    mutable PNamedShape            wingCleanShape;           /**< Clean wing surface without flaps cutout*/
+    Cache<PNamedShape, CCPACSWing> wingShapeWithCutouts;     /**< Wing without flaps / flaps removed */
+    Cache<PNamedShape, CCPACSWing> wingCleanShape;           /**< Clean wing surface without flaps cutout*/
     bool                           invalidated;              /**< Internal state flag */
     bool                           rebuildFusedSegments;     /**< Indicates if segmentation fusing need rebuild */
     bool                           rebuildFusedSegWEdge;     /**< Indicates if segmentation fusing need rebuild */
