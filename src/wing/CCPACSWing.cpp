@@ -951,6 +951,7 @@ TopoDS_Shape transformWingProfileGeometry(const CTiglTransformation& wingTransfo
 void CCPACSWing::SetBuildFlaps(bool build)
 {
     buildFlaps = build;
+    Reset();
 }
 
 PNamedShape CCPACSWing::GetWingCleanShape() const
