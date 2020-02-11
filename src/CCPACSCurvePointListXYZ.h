@@ -17,12 +17,12 @@ public:
 
     /// Returns the parameters of the kinks. If no kinks are defined
     /// this list is empty.
-    TIGL_EXPORT const std::vector<double>& GetKinksAsVector() const;
+    TIGL_EXPORT const std::vector<unsigned int>& GetKinksAsVector() const;
 
 private:
-    void BuildKinks(std::vector<double>& kinks) const;
+    void BuildKinks(std::vector<unsigned int>& kinks) const;
 
-    Cache<std::vector<double>, CCPACSCurvePointListXYZ> m_kinksVec;
+    Cache<std::vector<unsigned int>, CCPACSCurvePointListXYZ> m_kinksVec;
 };
 
 } // namespace tigl
