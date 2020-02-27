@@ -20,6 +20,8 @@
 #include "CTiglPointsToBSplineInterpolation.h"
 #include "tiglmathfunctions.h"
 
+#include <iterator>
+
 namespace
 {
     template <typename ArrayLike>
