@@ -90,9 +90,9 @@ namespace
         return result;
     }
 
-    std::vector<double> computeParams(const Handle(TColgp_HArray1OfPnt)& pnts, tigl::ParamMap& params)
+    std::vector<double> computeParams(const Handle(TColgp_HArray1OfPnt)& pnts, tigl::ParamMap& params, double alpha)
     {
-        auto initial_params = tigl::CTiglBSplineAlgorithms::computeParamsBSplineCurve(pnts, 0.5);
+        auto initial_params = tigl::CTiglBSplineAlgorithms::computeParamsBSplineCurve(pnts, alpha);
 
         unsigned int n_pnts = static_cast<unsigned int>(pnts->Length());
 
@@ -129,10 +129,12 @@ namespace tigl
 CTiglInterpolatePointsWithKinks::CTiglInterpolatePointsWithKinks(const Handle(TColgp_HArray1OfPnt) & points,
                                                                 const std::vector<unsigned int>& kinkIndices,
                                                                 const ParamMap& parameters,
+                                                                double alpha,
                                                                 unsigned int maxDegree)
     : m_pnts(points)
     , m_kinks(kinkIndices)
     , m_params(parameters)
+    , m_alpha(alpha)
     , m_maxDegree(maxDegree)
     , m_result(*this, &CTiglInterpolatePointsWithKinks::ComputeResult)
 {
@@ -153,7 +155,7 @@ void CTiglInterpolatePointsWithKinks::ComputeResult(Result& result) const
     auto params = m_params;
 
     // assuming iterating over parameters is sorted in keys
-    auto new_params = computeParams(m_pnts, params);
+    auto new_params = computeParams(m_pnts, params, m_alpha);
 
     unsigned int n_pnts = static_cast<unsigned int>(m_pnts->Length());
 
@@ -199,14 +201,14 @@ void CTiglInterpolatePointsWithKinks::ComputeResult(Result& result) const
         auto first_kink_idx = kinks.front();
 
         auto pnts = stack(slice(m_pnts, last_kink_idx + 1, static_cast<size_t>(m_pnts->Length())),
-                          slice(m_pnts, 1, first_kink_idx + 1));
+                          slice(m_pnts, 2, first_kink_idx + 1));
 
         auto left_parms = slice(new_params, last_kink_idx,  new_params.size()-1);
         std::transform(std::begin(left_parms), std::end(left_parms), std::begin(left_parms), [offset](double p) {
             return p + offset;
         });
-        auto right_parms = slice(new_params, 0, first_kink_idx);
-        auto the_pars = stack(left_parms, right_parms);
+        auto right_parms = slice(new_params, 1, first_kink_idx);
+        auto the_pars = stack(std::move(left_parms), std::move(right_parms));
 
 
         auto lower_curve = CTiglPointsToBSplineInterpolation(pnts, the_pars, m_maxDegree, false).Curve();
@@ -214,6 +216,7 @@ void CTiglInterpolatePointsWithKinks::ComputeResult(Result& result) const
         double param_to_split = new_params.front();
         auto last = CTiglBSplineAlgorithms::trimCurve(lower_curve, lower_curve->FirstParameter(), param_to_split);
         auto first = CTiglBSplineAlgorithms::trimCurve(lower_curve, param_to_split, lower_curve->LastParameter());
+        // shift parametrization of the last curve to the end of the parameter range
         CTiglBSplineAlgorithms::reparametrizeBSpline(*last, the_pars.front() - offset, param_to_split - offset);
 
         curve_segments.insert(curve_segments.begin(), first);
@@ -224,7 +227,7 @@ void CTiglInterpolatePointsWithKinks::ComputeResult(Result& result) const
         curve_segments.push_back(curve);
     }
 
-    result.curve = CTiglBSplineAlgorithms::concatCurves(curve_segments);
+    result.curve = CTiglBSplineAlgorithms::concatCurves(curve_segments, false);
     result.parameters = new_params;
 }
 

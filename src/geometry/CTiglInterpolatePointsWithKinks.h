@@ -44,6 +44,7 @@ public:
     TIGL_EXPORT CTiglInterpolatePointsWithKinks(const Handle(TColgp_HArray1OfPnt) & points,
                                                 const std::vector<unsigned int>& kinkIndices,
                                                 const ParamMap& parameters,
+                                                double alpha = 0.5,
                                                 unsigned int maxDegree=3);
 
 
@@ -55,6 +56,7 @@ private:
     const Handle(TColgp_HArray1OfPnt) & m_pnts;
     std::vector<unsigned int> m_kinks;
     ParamMap m_params;
+    double m_alpha;
     unsigned int m_maxDegree;
 
     struct Result {
