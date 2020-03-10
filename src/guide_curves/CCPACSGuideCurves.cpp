@@ -89,10 +89,7 @@ bool CCPACSGuideCurves::GuideCurveExists(std::string uid) const
     return false;
 }
 
-void CCPACSGuideCurves::GetRelativeCircumferenceRange(double relCirc,
-                                                      double& relCircStart,
-                                                      double& relCircEnd,
-                                                      int& idx) const
+std::vector<double> CCPACSGuideCurves::GetRelativeCircumferenceParameters() const
 {
     std::vector<double> relCircs;
     for (int iguide = 1; iguide <=  GetGuideCurveCount(); ++iguide) {
@@ -104,6 +101,16 @@ void CCPACSGuideCurves::GetRelativeCircumferenceRange(double relCirc,
     }
 
     std::sort(relCircs.begin(), relCircs.end());
+
+    return relCircs;
+}
+
+void CCPACSGuideCurves::GetRelativeCircumferenceRange(double relCirc,
+                                                      double& relCircStart,
+                                                      double& relCircEnd,
+                                                      int& idx) const
+{
+    std::vector<double> relCircs = GetRelativeCircumferenceParameters();
 
     // probably best to assert for performance reasons...
     assert( relCircs.size() > 0 );

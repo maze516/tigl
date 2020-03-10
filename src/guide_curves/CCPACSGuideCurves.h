@@ -65,6 +65,8 @@ public:
                                                    double& relCircStart,
                                                    double& relCircEnd,
                                                    int& index) const;
+
+    TIGL_EXPORT std::vector<double> GetRelativeCircumferenceParameters() const;
 };
 
 } // end namespace tigl

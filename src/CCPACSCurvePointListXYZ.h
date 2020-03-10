@@ -4,6 +4,10 @@
 #include "tigl_internal.h"
 #include "generated/CPACSCurvePointListXYZ.h"
 #include "Cache.h"
+#include "CTiglInterpolatePointsWithKinks.h"
+
+
+#include <Geom_BSplineCurve.hxx>
 
 namespace  tigl
 {
@@ -19,10 +23,19 @@ public:
     /// this list is empty.
     TIGL_EXPORT const std::vector<unsigned int>& GetKinksAsVector() const;
 
-private:
-    void BuildKinks(std::vector<unsigned int>& kinks) const;
+    /// Returns the map point-index vs parameter
+    TIGL_EXPORT const ParamMap& GetParamsAsMap() const;
 
-    Cache<std::vector<unsigned int>, CCPACSCurvePointListXYZ> m_kinksVec;
+private:
+    struct CachedObjects
+    {
+        std::vector<unsigned int> kinks;
+        ParamMap paramMap;
+    };
+    void BuildCache(CachedObjects& cache) const;
+
+
+    Cache<CachedObjects, CCPACSCurvePointListXYZ> m_cache;
 };
 
 } // namespace tigl
